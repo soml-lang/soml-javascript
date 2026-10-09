@@ -1,0 +1,94 @@
+{
+	"name": "soml-lang",
+	"version": "0.0.5",
+	"description": "Reference parser, serializer, and formatter for SOML, a config format for humans",
+	"license": "MIT",
+	"repository": "som-lang/soml-javascript",
+	"author": "Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)",
+	"type": "module",
+	"exports": {
+		"types": "./distribution/index.d.ts",
+		"default": "./distribution/index.js"
+	},
+	"sideEffects": false,
+	"engines": {
+		"node": ">=22"
+	},
+	"scripts": {
+		"build": "tsc --project tsconfig.build.json",
+		"prepack": "npm run build",
+		"test": "xo && tsc && node --test 'test/*.ts'",
+		"bench": "node bench/index.ts"
+	},
+	"files": [
+		"distribution"
+	],
+	"keywords": [
+		"config",
+		"configuration",
+		"parse",
+		"parser",
+		"stringify",
+		"serialize",
+		"canonical",
+		"json",
+		"toml",
+		"yaml"
+	],
+	"devDependencies": {
+		"@iarna/toml": "^2.2.5",
+		"@sindresorhus/tsconfig": "^8.1.0",
+		"@types/node": "^26.6.4",
+		"json5": "^2.2.3",
+		"jsonc-parser": "^3.3.1",
+		"smol-toml": "^1.9.0",
+		"toml": "^5.0.0",
+		"typescript": "^6.0.3",
+		"xo": "^5.0.1"
+	},
+	"xo": [
+		{
+			"ignores": [
+				"test/conformance/**",
+				"bench/fixtures/**"
+			]
+		},
+		{
+			"rules": {
+				"unicorn/prefer-code-point": "off",
+				"@typescript-eslint/switch-exhaustiveness-check": [
+					"error",
+					{
+						"considerDefaultExhaustiveForUnions": true
+					}
+				]
+			}
+		},
+		{
+			"files": [
+				"test/**"
+			],
+			"rules": {
+				"node-test/no-conditional-assertion": "off",
+				"node-test/no-import-test-files": "off",
+				"node-test/require-assertion": "off",
+				"unicorn/max-nested-calls": "off",
+				"@typescript-eslint/no-floating-promises": [
+					"error",
+					{
+						"allowForKnownSafeCalls": [
+							{
+								"from": "package",
+								"package": "node:test",
+								"name": [
+									"test",
+									"suite"
+								]
+							}
+						]
+					}
+				]
+			}
+		}
+	]
+}
