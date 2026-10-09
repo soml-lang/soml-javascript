@@ -1,0 +1,28 @@
+name: Release
+# Run it from the Actions tab after the version bump is pushed to `main`. It publishes the version in `package.json` and pushes its `v` tag.
+on: workflow_dispatch
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    # A release from any other branch would tag a commit that is not on `main`.
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      # Trusted publishing, which is set up on npm, so there is no token in the secrets. It also adds provenance.
+      id-token: write
+      # For pushing the tag.
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 26
+          registry-url: https://registry.npmjs.org
+      - run: npm install
+      - run: npm test
+      # `prepack` builds `distribution`.
+      - run: npm publish
+      - name: Tag
+        run: |
+          version="v$(jq --raw-output .version package.json)"
+          git tag "$version"
+          git push origin "$version"
