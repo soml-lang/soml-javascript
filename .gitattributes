@@ -1,0 +1,3 @@
+* text=auto eol=lf
+test/conformance/** -text linguist-vendored
+bench/fixtures/** -text linguist-vendored
