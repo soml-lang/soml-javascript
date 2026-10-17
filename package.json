@@ -1,6 +1,6 @@
 {
 	"name": "soml-lang",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"description": "Reference parser, serializer, and formatter for SOML, a config format for humans",
 	"license": "MIT",
 	"repository": "soml-lang/soml-javascript",
